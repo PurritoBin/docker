@@ -18,18 +18,32 @@ ultra fast, minimalistic, encrypted command line paste-bin
 - Tiny code base, less than 1000 lines of code, for very easy auditing.
 - Well documented, `man purrito`.
 
+## Parameters
+
+| Variable | Default | Description |
+|--------- | ------- | ----------- |
+| DOMAIN   | `http://localhost/` | **domain** used as prefix of returned paste |
+| MAXPASTESIZE  | `65536`  | Maximum paste size allowed, in BYTES |
+| SLUGSIZE  | `7` | Length of the randomly generated string for the paste |
+| SSL  | `NO` | To enable listening via `https` |
+| SERVERNAME  | `localhost` | Server name used for TLS handshakes, must be valid for the given certificates |
+| PUBLICKEY | `/etc/purritobin/public.crt` | SSL public certificate |
+| PRIVATEKEY | `/etc/purritobin/private.crt` | SSL private certificate|
+
 ## Usage （ฅ＾・ﻌ・＾）ฅ
 
-For all examples below, remember to substitute the value of `DOMAIN` from `localhost` to the actual domain/IP of the machine
+For all examples below, remember to substitute the value of `DOMAIN` from `localhost` to the actual domain/IP of the machine.
 
 ### docker cli
 
-The simplest example is to run without `https` and PurritoBin listens for pastes on port `42069`
+#### HTTP
+
+The simplest example is to run a server listening for pastes on port `42069`
 
 ```
 docker run -d \
   --name=purritobin \
-  -e DOMAIN="http://localhost/" \
+  -e DOMAIN="http://localhost:42069/" \
   -e MAXPASTESIZE=65536 \
   -e SLUGSIZE="7" \
   -p 42069:42069 \
@@ -38,6 +52,16 @@ docker run -d \
   purritobin/purritobin
 ```
 
+To do a test paste to the above server
+```
+  $ echo "123123" | curl --silent --data-binary "@${1:-/dev/stdin}" "http://localhost:42069/"
+  http://localhost:42069/orovwsc
+  $ curl --silent http://localhost:42069/orovwsc
+  123123
+```
+
+#### HTTPS
+
 To run with `https`, the public and private SSL keys need to be provided to the container and mounted at `/etc/purritobin`.
 By default, it is assumed that the public and private keys are stored at `/etc/purritobin/public.crt` and `/etc/purritobin/private.crt`, respectively.
 For example, assuming that the certificates, for the domain `localhost`, are stored on the host machine at `/path/to/certificates/folder/{public,private}.crt`, PurritoBin can be started in SSL mode with:
@@ -45,7 +69,7 @@ For example, assuming that the certificates, for the domain `localhost`, are sto
 ```
 docker run -d \
   --name=purritobin \
-  -e DOMAIN="https://localhost/" \
+  -e DOMAIN="https://localhost:42069/" \
   -e MAXPASTESIZE=65536 \
   -e SLUGSIZE="7" \
   -e SSL="YES" \
@@ -58,14 +82,3 @@ docker run -d \
   --restart unless-stopped \
   purritobin/purritobin
 ```
-### Parameters
-
-| Variable | Default | Description |
-|--------- | ------- | ----------- |
-| DOMAIN   | `http://localhost/` | **domain** used as prefix of returned paste |
-| MAXPASTESIZE  | `65536`  | Maximum paste size allowed, in BYTES |
-| SLUGSIZE  | `7` | Length of the randomly generated string for the paste |
-| SSL  | `NO` | To enable listening via `https` |
-| SERVERNAME  | `localhost` | Server name used for TLS handshakes, must be valid for the given certificates |
-| PUBLICKEY | `/etc/purritobin/public.crt` | SSL public certificate |
-| PRIVATEKEY | `/etc/purritobin/private.crt` | SSL private certificate|
