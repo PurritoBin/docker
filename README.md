@@ -68,4 +68,4 @@ docker run -d \
 | SSL  | `NO` | To enable listening via `https` |
 | SERVERNAME  | `localhost` | Server name used for TLS handshakes, must be valid for the given certificates |
 | PUBLICKEY | `/etc/purritobin/public.crt` | SSL public certificate |
-| PRIVATEKEY | `/etc/purritobin/private.key` | SSL private certificate|
+| PRIVATEKEY | `/etc/purritobin/private.crt` | SSL private certificate|
