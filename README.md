@@ -7,7 +7,7 @@
 
 [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/purritobin/purritobin)](https://hub.docker.com/r/purritobin/purritobin)
 [![Docker Pulls](https://img.shields.io/docker/pulls/purritobin/purritobin)](https://hub.docker.com/r/purritobin/purritobin)
-[![Docker Image Size](https://img.shields.io/docker/image-size/purritobin/purritobin/latest)](https://hub.docker.com/r/purritobin/purritobin)
+[![Docker Image Size](https://img.shields.io/docker/image-size/purritobin/purritobin/edge)](https://hub.docker.com/r/purritobin/purritobin)
 
 
 ultra fast, minimalistic, encrypted command line paste-bin

@@ -24,9 +24,16 @@ jobs:
           # list of Docker images to use as base name for tags
           images: |
             purritobin/purritobin
+          labels: |
+            org.opencontainers.image.title=PurritoBin
+            org.opencontainers.image.description="ultra fast, minimalistic, encrypted command line paste-bin"
+            org.opencontainers.image.authors="Aisha Tammy <purrito@bsd.ac>"
+            org.opencontainers.image.url="https://github.com/PurritoBin/PurritoBin"
+            org.opencontainers.image.source="https://github.com/PurritoBin/docker"
+            org.opencontainers.image.licenses=ISC
           # generate Docker tags based on the following events/attributes
           tags: |
-            type=schedule,pattern=latest
+            type=schedule,pattern=edge
             type=edge,branch=master
             type=match,pattern=(.*)-docker(.*),group=1
       -

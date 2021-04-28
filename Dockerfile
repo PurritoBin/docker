@@ -9,14 +9,6 @@ ARG  P_TAG="master"
 ARG  PD_TAG="master"
 ARG  VERSION="latest"
 
-LABEL org.opencontainers.image.authors="Aisha Tammy <purrito@bsd.ac>"
-LABEL org.opencontainers.image.description="ultra fast, minimalistic, encrypted command line paste-bin"
-LABEL org.opencontainers.image.licenses="ISC"
-LABEL org.opencontainers.image.source="https://github.com/PurritoBin/PurritoBin"
-LABEL org.opencontainers.image.title="PurritoBin v${VERSION}"
-LABEL org.opencontainers.image.version="${VERSION}"
-LABEL org.opencontainers.image.revision="0"
-
 ENV PUID=1000
 ENV PGID=1000
 
