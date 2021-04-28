@@ -19,7 +19,7 @@ ultra fast, minimalistic, encrypted command line paste-bin
 - Configurable paste size limit.
 - Auto-cleaning of pastes, with configurable paste lifetime at submission time:
    - `domain.tld/{day,week,month}`
-   - `domain.tld/<time-in-minutes>`
+   - `domain.tld/<time-in-minutes>` such as `domain.tld/300`
 - Paste storage in plain text, easy to integrate with all web servers (Apache, Nginx, etc.).
 - Encrypted pasting similar to [PrivateBin](https://github.com/PrivateBin/PrivateBin).
 - Optional **`https`** support for secure communication.
@@ -30,25 +30,27 @@ ultra fast, minimalistic, encrypted command line paste-bin
 
 The container image allows passing the following variables to configure PurritoBin:
 
-| Variable | Default | Description |
-|--------- | ------- | ----------- |
-| **`DOMAIN`** | `http://localhost:42069/` | **domain** used as prefix of returned paste |
-| **`MAXPASTESIZE`**  | `65536` | **maximum paste size** allowed, in *BYTES* |
-| **`SLUGSIZE`** | `7` | **length** of the *randomly generated string id* for the paste |
-| **`TLS`** | `NO` | set to `YES` to enable listening via **`https`** |
-| **`SERVERNAME`** | `localhost` | **server name indication** used for *TLS* handshakes, must be valid for the given certificates |
-| **`PUBLICKEY`** | `/etc/purritobin/public.crt` | *TLS* public certificate |
-| **`PRIVATEKEY`** | `/etc/purritobin/private.crt` | *TLS* private certificate|
+| Variable           | Default                       | Description                                                                                    |
+|--------------------|-------------------------------|------------------------------------------------------------------------------------------------|
+| **`DOMAIN`**       | `http://localhost:42069/`     | **domain** used as prefix of returned paste                                                    |
+| **`MAXPASTESIZE`** | `65536`                       | **maximum paste size** allowed, in *BYTES*                                                     |
+| **`SLUGSIZE`**     | `7`                           | **length** of the *randomly generated string id* for the paste                                 |
+| **`TLS`**          | `NO`                          | set to `YES` to enable listening via **`https`**                                               |
+| **`SERVERNAME`**   | `localhost`                   | **server name indication** used for *TLS* handshakes, must be valid for the given certificates |
+| **`PUBLICKEY`**    | `/etc/purritobin/public.crt`  | *TLS* public certificate                                                                       |
+| **`PRIVATEKEY`**   | `/etc/purritobin/private.crt` | *TLS* private certificate                                                                      |
+| **`PUID`**         | `1000`                        | UID for running privilege separated containers, default should be enough for almost everyone   |
+| **`PGID`**         | `1000`                        | GID for running privilege separated containers, default should be enough for almost everyone   |
 
 ## Mountable Volumes
 
 The container image can use the following volumes, it is recommended to mount at least the first two volumes for persistent storage:
 
-| Volume | Description |
-|------- | ----------- |
-| `/var/www/purritobin` | default location for storing the pastes |
-| `/var/db/purritobin` | default location for storing the timestamp database |
-| `/etc/purritobin` | default location for loading certificates, only used if enabling TLS |
+| Volume                | Description                                                          |
+|-----------------------|----------------------------------------------------------------------|
+| `/var/www/purritobin` | default location for storing the pastes                              |
+| `/var/db/purritobin`  | default location for storing the timestamp database                  |
+| `/etc/purritobin`     | default location for loading certificates, only used if enabling TLS |
 
 ## Examples
 
@@ -70,13 +72,13 @@ A simple example:
 
 ```
 docker run -d \
-  --name=purritobin \
-  -e DOMAIN="http://localhost:8080/" \
-  -p 8080:42069 \
-  -v /data/apps/purritobin/pastes:/var/www/purritobin \
-  -v /data/apps/purritobin/database:/var/db/purritobin \
-  --restart unless-stopped \
-  purritobin/purritobin
+    --name=purritobin \
+    -e DOMAIN="http://localhost:8080/" \
+    -p 8080:42069 \
+    -v /data/apps/purritobin/pastes:/var/www/purritobin \
+    -v /data/apps/purritobin/database:/var/db/purritobin \
+    --restart unless-stopped \
+    purritobin/purritobin
 ```
 
 
@@ -84,10 +86,10 @@ To check that the server is running, visit the page in a web browser (or curl it
 
 To do a test paste to the above server
 ```
-  $ echo "cool paste" | curl --silent --data-binary "@${1:-/dev/stdin}" "http://localhost:8080/"
-  http://localhost:8080/purr1t0
-  $ curl --silent http://localhost:8080/purr1t0
-  cool paste
+    $ echo "cool paste" | curl --silent --data-binary "@${1:-/dev/stdin}" "http://localhost:8080/"
+    http://localhost:8080/purr1t0
+    $ curl --silent http://localhost:8080/purr1t0
+    cool paste
 ```
 
 #### HTTPS
@@ -100,18 +102,18 @@ For example, assuming that the certificates for the domain `localhost` are store
 
 ```
 docker run -d \
-  --name=purritobin \
-  -e DOMAIN="https://localhost:42069/" \
-  -e MAXPASTESIZE=65536 \
-  -e SLUGSIZE="7" \
-  -e TLS="YES" \
-  -e PUBLICKEY="/etc/purritobin/public.crt" \
-  -e PRIVATEKEY="/etc/purritobin/private.crt" \
-  -e SERVERNAME="localhost" \
-  -p 8080:42069 \
-  -v /data/apps/purritobin/pastes:/var/www/purritobin \
-  -v /data/apps/purritobin/database:/var/db/purritobin \
-  -v /data/apps/certificates:/etc/purritobin \
-  --restart unless-stopped \
-  purritobin/purritobin
+    --name=purritobin \
+    -e DOMAIN="https://localhost:42069/" \
+    -e MAXPASTESIZE=65536 \
+    -e SLUGSIZE="7" \
+    -e TLS="YES" \
+    -e PUBLICKEY="/etc/purritobin/public.crt" \
+    -e PRIVATEKEY="/etc/purritobin/private.crt" \
+    -e SERVERNAME="localhost" \
+    -p 8080:42069 \
+    -v /data/apps/purritobin/pastes:/var/www/purritobin \
+    -v /data/apps/purritobin/database:/var/db/purritobin \
+    -v /data/apps/certificates:/etc/purritobin \
+    --restart unless-stopped \
+    purritobin/purritobin
 ```
