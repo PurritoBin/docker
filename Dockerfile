@@ -6,16 +6,8 @@ ARG  MDB_TAG="0.9.29"
 ARG  MDBXX_TAG="1.0.0"
 
 ARG  P_TAG="0.6.0"
-ARG  PD_TAG="0.6.0-docker5"
-ARG  VERSION="0.6.0-docker5"
-
-LABEL org.opencontainers.image.authors="Aisha Tammy <purrito@bsd.ac>"
-LABEL org.opencontainers.image.description="ultra fast, minimalistic, encrypted command line paste-bin"
-LABEL org.opencontainers.image.licenses="ISC"
-LABEL org.opencontainers.image.source="https://github.com/PurritoBin/PurritoBin"
-LABEL org.opencontainers.image.title="PurritoBin v${VERSION}"
-LABEL org.opencontainers.image.version="${VERSION}"
-LABEL org.opencontainers.image.revision="0"
+ARG  PD_TAG="0.6.0-docker6"
+ARG  VERSION="0.6.0-docker6"
 
 ENV PUID=1000
 ENV PGID=1000
