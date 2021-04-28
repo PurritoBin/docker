@@ -1,9 +1,13 @@
 name: docker
 
 on:
+  schedule:
+    - cron: '0 7 * * *' # everyday at 7am
   push:
     branches:
       - 'master'
+    tags:
+      - '*'
 
 jobs:
   docker:
@@ -12,6 +16,19 @@ jobs:
       -
         name: Checkout
         uses: actions/checkout@v2
+      -
+        name: Docker meta
+        id: meta
+        uses: crazy-max/ghaction-docker-meta@v2
+        with:
+          # list of Docker images to use as base name for tags
+          images: |
+            purritobin/purritobin
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=schedule,pattern=latest
+            type=edge,branch=master
+            type=match,pattern=(.*)-docker(.*),group=1
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -32,4 +49,5 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: purritobin/purritobin:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
