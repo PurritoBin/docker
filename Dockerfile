@@ -62,7 +62,7 @@ RUN apk update \
  && cd PurritoBin \
  && git checkout "${P_TAG}" \
  && make PREFIX="/usr" install \
- && install -m644 frontend/{index,paste}.html /var/www/purritobin \
+ && install -m 0644 frontend/index.html frontend/paste.html /var/www/purritobin \
  && cd /purritobin \
  && git clone https://github.com/PurritoBin/docker \
  && cd docker \
