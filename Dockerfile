@@ -5,9 +5,9 @@ ARG  UWS_TAG="2fb38d5de92795998f9137ae30193aa65128b68b"
 ARG  MDB_TAG="0.9.29"
 ARG  MDBXX_TAG="1.0.0"
 
-ARG  P_TAG="master"
-ARG  PD_TAG="master"
-ARG  VERSION="latest"
+ARG  P_TAG="0.6.0"
+ARG  PD_TAG="0.6.0-docker0"
+ARG  VERSION="0.6.0-docker0"
 
 LABEL org.opencontainers.image.authors="Aisha Tammy <purrito@bsd.ac>"
 LABEL org.opencontainers.image.description="ultra fast, minimalistic, encrypted command line paste-bin"
