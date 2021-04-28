@@ -1,10 +1,13 @@
 FROM alpine:3.12
 
 ARG  US_TAG="5440dbac79bd76444175b76ee95dfcade12a6aac"
-ARG  UWS_TAG="b7202e71eea5195a35260f69efc3278b863a50ba"
-ARG  P_TAG="0.5.0"
+ARG  UWS_TAG="2fb38d5de92795998f9137ae30193aa65128b68b"
+ARG  MDB_TAG="0.9.29"
+ARG  MDBXX_TAG="1.0.0"
 
-ARG  VERSION="0.5.0"
+ARG  P_TAG="master"
+ARG  PD_TAG="master"
+ARG  VERSION="latest"
 
 LABEL org.opencontainers.image.authors="Aisha Tammy <purrito@bsd.ac>"
 LABEL org.opencontainers.image.description="ultra fast, minimalistic, encrypted command line paste-bin"
@@ -18,12 +21,13 @@ ENV CC=gcc
 ENV CXX=g++
 ENV CFLAGS="-flto -O3"
 ENV CXXFLAGS="-flto -O3"
+ENV LDFLAGS="-flto -O3"
 
-ENV DOMAIN="http://localhost/"
+ENV DOMAIN="http://localhost:42069/"
 ENV MAXPASTESIZE="65536"
 ENV SLUGSIZE="7"
 
-ENV SSL=NO
+ENV TLS=NO
 ENV SERVERNAME="http://localhost/"
 ENV PUBLICKEY="/etc/purritobin/public.crt"
 ENV PRIVATEKEY="/etc/purritobin/private.crt"
@@ -36,23 +40,33 @@ RUN apk update \
  && git clone https://github.com/uNetworking/uSockets \
  && wget https://raw.githubusercontent.com/gentoo/guru/dev/net-libs/usockets/files/usockets-0.7.1-Makefile.patch \
  && cd uSockets \
+ && git checkout ${US_TAG} \
  && git apply < ../usockets-0.7.1-Makefile.patch \
  && make WITH_OPENSSL=1 \
  && make install \
- && cd .. \
+ && cd /purritobin \
  && git clone https://github.com/uNetworking/uWebSockets \
  && cd uWebSockets \
+ && git checkout ${UWS_TAG} \
  && cp -r src /usr/include/uWebSockets \
- && cd .. \
+ && cd /purritobin \
+ && wget https://raw.githubusercontent.com/hoytech/lmdbxx/${MDBXX_TAG}/lmdb%2B%2B.h -O /usr/include/lmdb++.h \
+ && wget https://git.openldap.org/openldap/openldap/-/archive/LMDB_${MDB_TAG}/openldap-LMDB_${MDB_TAG}.tar.gz \
+ && tar xzf openldap-LMDB_${MDB_TAG}.tar.gz \
+ && cd openldap-LMDB_${MDB_TAG}/libraries/liblmdb \
+ && make CC=${CC} XCFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" \
+ && make prefix="/usr" install \
+ && cd /purritobin \
  && git clone https://github.com/PurritoBin/PurritoBin \
  && cd PurritoBin \
  && git checkout "${P_TAG}" \
  && make PREFIX="/usr" install \
- && cd .. \
  && git clone https://github.com/PurritoBin/docker \
  && cd docker \
- && install -m755 purritobin_wrapper /usr/bin \
- && mkdir -p /var/www/purritobin /etc/purritobin \
+ && git checkout ${PD_TAG} \
+ && install -m755 docker/purritobin_wrapper /usr/bin \
+ && cd /purritobin \
+ && mkdir -p /var/www/purritobin /etc/purritobin /var/db/purritobin.mdb \
  && apk del gcc g++ git make musl-dev openssl-dev \
  && cd / \
  && rm -rf /purritobin
