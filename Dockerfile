@@ -61,10 +61,11 @@ RUN apk update \
  && cd PurritoBin \
  && git checkout "${P_TAG}" \
  && make PREFIX="/usr" install \
+ && cd /purritobin \
  && git clone https://github.com/PurritoBin/docker \
  && cd docker \
  && git checkout ${PD_TAG} \
- && install -m755 docker/purritobin_wrapper /usr/bin \
+ && install -m755 purritobin_wrapper /usr/bin \
  && cd /purritobin \
  && mkdir -p /var/www/purritobin /etc/purritobin /var/db/purritobin.mdb \
  && apk del gcc g++ git make musl-dev openssl-dev \
