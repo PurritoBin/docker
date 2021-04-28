@@ -57,17 +57,18 @@ RUN apk update \
  && make CC=${CC} XCFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" \
  && make prefix="/usr" install \
  && cd /purritobin \
+ && mkdir -p /var/www/purritobin /etc/purritobin /var/db/purritobin.mdb \
  && git clone https://github.com/PurritoBin/PurritoBin \
  && cd PurritoBin \
  && git checkout "${P_TAG}" \
  && make PREFIX="/usr" install \
+ && install -m644 frontend/{index,paste}.html /var/www/purritobin \
  && cd /purritobin \
  && git clone https://github.com/PurritoBin/docker \
  && cd docker \
  && git checkout ${PD_TAG} \
  && install -m755 purritobin_wrapper /usr/bin \
  && cd /purritobin \
- && mkdir -p /var/www/purritobin /etc/purritobin /var/db/purritobin.mdb \
  && apk del gcc g++ git make musl-dev openssl-dev \
  && cd / \
  && rm -rf /purritobin
