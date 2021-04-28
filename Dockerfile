@@ -6,8 +6,8 @@ ARG  MDB_TAG="0.9.29"
 ARG  MDBXX_TAG="1.0.0"
 
 ARG  P_TAG="0.6.0"
-ARG  PD_TAG="0.6.0-docker2"
-ARG  VERSION="0.6.0-docker2"
+ARG  PD_TAG="0.6.0-docker5"
+ARG  VERSION="0.6.0-docker5"
 
 LABEL org.opencontainers.image.authors="Aisha Tammy <purrito@bsd.ac>"
 LABEL org.opencontainers.image.description="ultra fast, minimalistic, encrypted command line paste-bin"
