@@ -66,8 +66,7 @@ RUN apk update \
  && cd PurritoBin \
  && git checkout "${P_TAG}" \
  && make PREFIX="/usr" install \
- && cp frontend/index.html frontend/paste.html /var/www/purritobin \
- && chown -R ${PUID}:${PGID} /var/www/purritobin \
+ && cp frontend/index.html /usr/share/purritobin \
  && cd /purritobin \
  && git clone https://github.com/PurritoBin/docker \
  && cd docker \
