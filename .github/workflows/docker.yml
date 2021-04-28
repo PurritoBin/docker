@@ -32,6 +32,8 @@ jobs:
             org.opencontainers.image.source=https://github.com/PurritoBin/docker
             org.opencontainers.image.licenses=ISC
           # generate Docker tags based on the following events/attributes
+          flavor: |
+            latest=false
           tags: |
             type=schedule,pattern=edge
             type=edge,branch=master
