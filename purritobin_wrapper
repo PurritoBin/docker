@@ -14,9 +14,11 @@ cp /usr/share/purritobin/index.html /var/www/purritobin
 
 if [ "${TLS}" = "NO" ]; then
   purrito -d "${DOMAIN}" -m "${MAXPASTESIZE}" \
-          -g "${SLUGSIZE}" -t
+          -g "${SLUGSIZE}" -t \
+          -x "Content-Type" -v "text/html; charset=UTF-8"
 else
   purrito -d "${DOMAIN}" -m "${MAXPASTESIZE}" \
           -g "${SLUGSIZE}" -t \
+          -x "Content-Type" -v "text/html; charset=UTF-8" \
           -l -n "${SERVERNAME}" -c "${PUBLICKEY}" -k "${PRIVATEKEY}"
 fi
