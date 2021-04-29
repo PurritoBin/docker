@@ -58,12 +58,12 @@ RUN apk update \
  && cd PurritoBin \
  && git checkout "${P_TAG}" \
  && make PREFIX="/usr" install \
- && cp frontend/index.html /usr/share/purritobin \
  && cd /purritobin \
  && git clone https://github.com/PurritoBin/docker \
  && cd docker \
  && git checkout ${PD_TAG} \
- && install -m755 purritobin_wrapper /usr/bin \
+ && install -m0755 purritobin_wrapper /usr/bin \
+ && install -m0644 index.html /usr/share/purritobin \
  && cd /purritobin \
  && apk del gcc g++ git make musl-dev openssl-dev \
  && cd / \
