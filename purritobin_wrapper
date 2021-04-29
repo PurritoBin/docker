@@ -9,7 +9,9 @@
 : ${PUBLICKEY="/etc/purritobin/public.crt"}
 : ${PRIVATEKEY="/etc/purritobin/private.crt"}
 
-cp /usr/share/purritobin/paste.html /var/www/purritobin
+[ ! -f /var/www/purritobin/paste.html ] && \
+    cp /usr/share/purritobin/paste.html /var/www/purritobin
+[ ! -f /var/www/purritobin/index.html ] && \
 cp /usr/share/purritobin/index.html /var/www/purritobin
 
 if [ "${TLS}" = "NO" ]; then
