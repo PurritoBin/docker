@@ -30,7 +30,7 @@ ENV PRIVATEKEY="/etc/purritobin/private.crt"
 WORKDIR /purritobin
 
 RUN apk update \
- && apk add libgcc libstdc++ libssl1.1 libcrypto1.1 \
+ && apk add libgcc libstdc++ libssl1.1 libcrypto1.1 lmdb-dev \
  && apk add gcc g++ git make musl-dev openssl-dev meson ninja \
  && mkdir -p /var/www/purritobin /etc/purritobin /var/db/purritobin \
  && chown -R ${PUID}:${PGID} /var/www/purritobin /etc/purritobin /var/db/purritobin \
