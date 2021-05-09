@@ -57,9 +57,7 @@ RUN apk update \
  && git clone https://github.com/PurritoBin/PurritoBin \
  && cd PurritoBin \
  && git checkout "${P_TAG}" \
- && meson setup build \
- && ninja -C build \
- && ninja -C build install \
+ && make PREFIX="/usr" install \
  && cd /purritobin \
  && git clone https://github.com/PurritoBin/docker \
  && cd docker \
