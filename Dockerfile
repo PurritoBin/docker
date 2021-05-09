@@ -5,8 +5,8 @@ ARG  UWS_TAG="2fb38d5de92795998f9137ae30193aa65128b68b"
 ARG  MDB_TAG="0.9.29"
 ARG  MDBXX_TAG="1.0.0"
 
-ARG  P_TAG="master"
-ARG  PD_TAG="master"
+ARG  P_TAG="0.6.6"
+ARG  PD_TAG="0.6.6-docker0"
 ARG  VERSION="latest"
 
 ENV PUID=1000
