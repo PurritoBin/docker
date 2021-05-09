@@ -31,7 +31,7 @@ WORKDIR /purritobin
 
 RUN apk update \
  && apk add libgcc libstdc++ libssl1.1 libcrypto1.1 \
- && apk add gcc g++ git make musl-dev openssl-dev \
+ && apk add gcc g++ git make musl-dev openssl-dev meson ninja \
  && mkdir -p /var/www/purritobin /etc/purritobin /var/db/purritobin \
  && chown -R ${PUID}:${PGID} /var/www/purritobin /etc/purritobin /var/db/purritobin \
  && git clone https://github.com/uNetworking/uSockets \
@@ -57,7 +57,8 @@ RUN apk update \
  && git clone https://github.com/PurritoBin/PurritoBin \
  && cd PurritoBin \
  && git checkout "${P_TAG}" \
- && make PREFIX="/usr" install \
+ && meson setup build \
+ && ninja -C build install \
  && cd /purritobin \
  && git clone https://github.com/PurritoBin/docker \
  && cd docker \
@@ -65,7 +66,7 @@ RUN apk update \
  && install -m0755 purritobin_wrapper /usr/bin \
  && install -m0644 index.html /usr/share/purritobin \
  && cd /purritobin \
- && apk del gcc g++ git make musl-dev openssl-dev \
+ && apk del gcc g++ git make musl-dev openssl-dev meson ninja \
  && cd / \
  && rm -rf /purritobin
 
