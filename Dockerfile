@@ -64,7 +64,6 @@ RUN apk update \
  && cd docker \
  && git checkout ${PD_TAG} \
  && install -m0755 purritobin_wrapper /usr/bin \
- && install -m0644 index.html /usr/share/purritobin \
  && cd /purritobin \
  && apk del gcc g++ git make musl-dev openssl-dev meson ninja \
  && cd / \

@@ -9,20 +9,20 @@
 : ${PUBLICKEY="/etc/purritobin/public.crt"}
 : ${PRIVATEKEY="/etc/purritobin/private.crt"}
 
-[ ! -f /var/www/purritobin/paste.html ] && \
-    cp /usr/share/purritobin/paste.html /var/www/purritobin
-[ ! -f /var/www/purritobin/index.html ] && \
-    cp /usr/share/purritobin/index.html /var/www/purritobin
+for html_file in about index paste; do
+    [ ! -f /var/www/purritobin/${html_file}.html ] && \
+        cp /usr/share/purritobin/${html_file}.html /var/www/purritobin
+done
 
 if [ "${TLS}" = "NO" ]; then
     exec purrito -d "${DOMAIN}" -m "${MAXPASTESIZE}" \
-            -g "${SLUGSIZE}" -t \
-            -x "Content-Type" -v "text/plain; charset=UTF-8" \
-            ${P_FLAGS}
+                 -g "${SLUGSIZE}" -t \
+                 -x "Content-Type" -v "text/plain; charset=UTF-8" \
+                 ${P_FLAGS}
 else
     exec purrito -d "${DOMAIN}" -m "${MAXPASTESIZE}" \
-            -g "${SLUGSIZE}" -t \
-            -x "Content-Type" -v "text/plain; charset=UTF-8" \
-            -l -n "${SERVERNAME}" -c "${PUBLICKEY}" -k "${PRIVATEKEY}" \
-            ${P_FLAGS}
+                 -g "${SLUGSIZE}" -t \
+                 -x "Content-Type" -v "text/plain; charset=UTF-8" \
+                 -l -n "${SERVERNAME}" -c "${PUBLICKEY}" -k "${PRIVATEKEY}" \
+                 ${P_FLAGS}
 fi
