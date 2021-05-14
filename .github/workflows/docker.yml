@@ -35,7 +35,7 @@ jobs:
           flavor: |
             latest=false
           tags: |
-            type=schedule,pattern=edge
+            type=schedule,pattern=latest
             type=edge,branch=master
             type=match,pattern=(.*)-docker(.*),group=1
       -
