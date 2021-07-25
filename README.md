@@ -41,6 +41,7 @@ The container image allows passing the following variables to configure PurritoB
 | **`PRIVATEKEY`**   | `/etc/purritobin/private.crt` | *TLS* private certificate                                                                      |
 | **`PUID`**         | `1000`                        | UID for running privilege separated containers, default should be enough for almost everyone   |
 | **`PGID`**         | `1000`                        | GID for running privilege separated containers, default should be enough for almost everyone   |
+| **`P_FLAGS`**      | `""`                          | Extra flags to provide extra settings                                                          |
 
 ## Mountable Volumes
 
