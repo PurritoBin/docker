@@ -38,7 +38,7 @@ RUN apk update \
  && wget https://raw.githubusercontent.com/gentoo/guru/dev/net-libs/usockets/files/usockets-0.7.1_p20210909-Makefile.patch \
  && cd uSockets \
  && git checkout ${US_TAG} \
- && git apply < ../usockets-0.7.1-Makefile.patch \
+ && git apply < ../usockets-0.7.1_p20210909-Makefile.patch \
  && make WITH_OPENSSL=1 \
  && make install \
  && cd /purritobin \
