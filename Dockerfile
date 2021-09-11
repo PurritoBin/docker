@@ -1,7 +1,7 @@
 FROM alpine:3.13.5
 
-ARG  US_TAG="5440dbac79bd76444175b76ee95dfcade12a6aac"
-ARG  UWS_TAG="2fb38d5de92795998f9137ae30193aa65128b68b"
+ARG  US_TAG="c06112c89b4c1cf5a09b5f8daa2def756b925889"
+ARG  UWS_TAG="e669c7017c1f2f6d4c6f173fa286b6c685465857"
 ARG  MDB_TAG="0.9.29"
 ARG  MDBXX_TAG="1.0.0"
 
@@ -35,7 +35,7 @@ RUN apk update \
  && mkdir -p /var/www/purritobin /etc/purritobin /var/db/purritobin \
  && chown -R ${PUID}:${PGID} /var/www/purritobin /etc/purritobin /var/db/purritobin \
  && git clone https://github.com/uNetworking/uSockets \
- && wget https://raw.githubusercontent.com/gentoo/guru/dev/net-libs/usockets/files/usockets-0.7.1-Makefile.patch \
+ && wget https://raw.githubusercontent.com/gentoo/guru/dev/net-libs/usockets/files/usockets-0.7.1_p20210909-Makefile.patch \
  && cd uSockets \
  && git checkout ${US_TAG} \
  && git apply < ../usockets-0.7.1-Makefile.patch \
