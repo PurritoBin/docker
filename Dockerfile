@@ -6,8 +6,8 @@ ARG  MDB_TAG="0.9.29"
 ARG  MDBXX_TAG="1.0.0"
 
 ARG  P_TAG="0.6.7"
-ARG  PD_TAG="0.6.7-docker2"
-ARG  VERSION="0.6.7-docker2"
+ARG  PD_TAG="0.6.7-docker3"
+ARG  VERSION="0.6.7-docker3"
 
 ENV PUID=1000
 ENV PGID=1000

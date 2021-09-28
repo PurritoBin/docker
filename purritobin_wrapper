@@ -11,7 +11,7 @@
 
 for html_file in about index paste; do
     [ ! -f /var/www/purritobin/${html_file}.html ] && \
-        cp /usr/share/purritobin/${html_file}.html /var/www/purritobin
+        cp /usr/share/PurritoBin/${html_file}.html /var/www/purritobin
 done
 
 if [ "${TLS}" = "NO" ]; then
