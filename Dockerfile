@@ -1,7 +1,7 @@
 FROM alpine:3.13.5
 
-ARG  US_TAG="0ebdde0601cc82349fc11a7c4bbb6dc5c9f28f42"
-ARG  UWS_TAG="5d8983902690a0b93193d922d6239965bdca2f76"
+ARG  US_TAG="c2c1bbfa1644f1f6eb7fc9375650f41c5f9b7b06"
+ARG  UWS_TAG="40742a7c63a033b2005d8555d98dd875f3965b0a"
 ARG  MDB_TAG="0.9.29"
 ARG  MDBXX_TAG="1.0.0"
 
@@ -35,10 +35,12 @@ RUN apk update \
  && mkdir -p /var/www/purritobin /etc/purritobin /var/db/purritobin \
  && chmod 777 /var/www/purritobin /etc/purritobin /var/db/purritobin \
  && git clone https://github.com/uNetworking/uSockets \
- && wget https://raw.githubusercontent.com/gentoo/guru/dev/net-libs/usockets/files/usockets-0.7.1_p20210909-Makefile.patch \
+ && wget https://raw.githubusercontent.com/gentoo/guru/dev/net-libs/usockets/files/usockets-0.8.1_p20211023-Makefile.patch \
+ && wget https://raw.githubusercontent.com/gentoo/guru/dev/net-libs/usockets/files/usockets-0.8.1_p20211023-pkg-config.patch \
  && cd uSockets \
  && git checkout ${US_TAG} \
- && git apply < ../usockets-0.7.1_p20210909-Makefile.patch \
+ && git apply < ../usockets-0.8.1_p20211023-Makefile.patch \
+ && git apply < ../usockets-0.8.1_p20211023-pkg-config.patch \
  && make WITH_OPENSSL=1 \
  && make install \
  && cd /purritobin \
